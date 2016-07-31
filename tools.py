@@ -1,3 +1,10 @@
+import os
+
+import pygame
+
+import config as c
+
+
 class ModeBase:
     """Modes will inherit from this class. """
 
@@ -50,3 +57,22 @@ class ModeBase:
         """
 
         self.SwitchToMode(None)
+
+
+c.sounds = {}
+
+
+def play_sound(path):
+
+    sound = c.sounds.get(path)
+    if sound == None:
+        canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+
+        if os.path.isfile(canonicalized_path):
+            sound = pygame.mixer.Sound(canonicalized_path)
+            c.sounds[path] = sound
+        else:
+            sound = None
+
+    if sound:
+        sound.play()

@@ -35,9 +35,6 @@ class GameMode(tools.ModeBase):
                 # Move to the next mode when the user presses the Start button
                 if event.key == c.START_BUTTON:
                     self.SwitchToMode(c.GAME_OVER_MODE)
-                elif event.key == c.SERVICE_BUTTON:
-                    # Move to the Service Menu when the user presses the Service button
-                    self.SwitchToMode(c.SERVICE_MENU_MODE)
 
                 # Limit switches activation
                 elif event.key == c.LEFT_LIMIT_TOP:
@@ -65,10 +62,21 @@ class GameMode(tools.ModeBase):
         pressed = pygame.key.get_pressed()
 
         # If a joystick is moved, move the carriage if a limit switch not active
-        if pressed[c.LEFT_JOY_UP]    and not self.limitLeftUp:    self.leftBarPosition  -= 3
-        if pressed[c.LEFT_JOY_DOWN]  and not self.limitLeftDown:  self.leftBarPosition  += 3
-        if pressed[c.RIGHT_JOY_UP]   and not self.limitRightUp:   self.rightBarPosition -= 3
-        if pressed[c.RIGHT_JOY_DOWN] and not self.limitRightDown: self.rightBarPosition += 3
+        if pressed[c.LEFT_JOY_UP] and not self.limitLeftUp:
+            self.leftBarPosition  -= 3
+            tools.play_sound(c.AUDIO_ROD_LEFT_UP)
+
+        if pressed[c.LEFT_JOY_DOWN] and not self.limitLeftDown:
+            self.leftBarPosition  += 3
+            tools.play_sound(c.AUDIO_ROD_LEFT_DOWN)
+
+        if pressed[c.RIGHT_JOY_UP] and not self.limitRightUp:
+            self.rightBarPosition -= 3
+            tools.play_sound(c.AUDIO_ROD_RIGHT_UP)
+
+        if pressed[c.RIGHT_JOY_DOWN] and not self.limitRightDown:
+            self.rightBarPosition += 3
+            tools.play_sound(c.AUDIO_ROD_RIGHT_DOWN)
 
 
     def Render(self, screen):

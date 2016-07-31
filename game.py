@@ -25,6 +25,10 @@ def run_game(width, height, fps, starting_mode):
 
     """
 
+    # Reduce the audio sample rate to limit CPU burden
+    # (Must be done before pygame.init()! )
+    pygame.mixer.pre_init(44100,-16,2, 1024)
+
     # Initialize all modules required for PyGame
     pygame.init()
 
@@ -75,6 +79,10 @@ def run_game(width, height, fps, starting_mode):
                 # If Alt + F4 is pressed...
                 elif event.key == pygame.K_F4 and alt_pressed:
                     quit_attempt = True
+
+                # If Service Mode button is pressed...
+                if event.key == c.SERVICE_BUTTON:
+                    active_mode.SwitchToMode(c.SERVICE_MENU_MODE)
 
             # If the event triggered a quit attempt...
             if quit_attempt:

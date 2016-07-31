@@ -16,11 +16,6 @@ class AttractMode(tools.ModeBase):
                 if event.key == c.START_BUTTON:
                     # Move to the next mode when the user presses the Start button
                     self.SwitchToMode(c.GAME_MODE)
-                    
-                elif event.key == c.SERVICE_BUTTON:
-                    # Move to the Service Menu when the user presses the Service button
-                    self.SwitchToMode(c.SERVICE_MENU_MODE)
-
 
     def Render(self, screen):
         """Render output. """
