@@ -2,7 +2,7 @@ import pygame
 
 import config as c
 
-from modes import AttractMode, GameMode, GameOverMode
+from modes import AttractMode, GameMode, GameOverMode, ServiceMenuMode
 
 
 
@@ -10,6 +10,7 @@ from modes import AttractMode, GameMode, GameOverMode
 c.ATTRACT_MODE = AttractMode.AttractMode()
 c.GAME_MODE = GameMode.GameMode()
 c.GAME_OVER_MODE = GameOverMode.GameOverMode();
+c.SERVICE_MENU_MODE = ServiceMenuMode.ServiceMenuMode();
 
 
 
