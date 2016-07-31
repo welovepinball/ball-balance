@@ -7,8 +7,6 @@ import pygame
 #opens controller config file, reads in values, and applies them to keys
 control_config_file = open("control_config.txt", "r")
 
-print (pygame.K_x)
-
 keyinput = []
 for line in control_config_file:
     line = line[line.find("=")+1:]
