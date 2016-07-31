@@ -35,6 +35,9 @@ class GameMode(tools.ModeBase):
                 # Move to the next mode when the user presses the Start button
                 if event.key == c.START_BUTTON:
                     self.SwitchToMode(c.GAME_OVER_MODE)
+                elif event.key == c.SERVICE_BUTTON:
+                    # Move to the Service Menu when the user presses the Service button
+                    self.SwitchToMode(c.SERVICE_MENU_MODE)
 
                 # Limit switches activation
                 elif event.key == c.LEFT_LIMIT_TOP:
