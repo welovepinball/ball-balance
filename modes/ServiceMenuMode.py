@@ -3,6 +3,7 @@ import tools
 
 import config as c
 
+
 global menu_item_total
 menu_item_total = 3
 global current_menu_item
@@ -20,10 +21,31 @@ global config_menu_total_items
 global config_menu_items
 config_menu_items = []
 
-config_menu_items.append("Left Joy Up: " + pygame.key.name(c.LEFT_JOY_UP))
-config_menu_items.append("Left Joy Down: " + pygame.key.name(c.LEFT_JOY_DOWN))
-config_menu_items.append("Right Joy Up: " + pygame.key.name(c.RIGHT_JOY_UP))
-config_menu_items.append("Right Joy Down: " + pygame.key.name(c.RIGHT_JOY_DOWN))
+config_menu_items.append("LEFT_JOY_UP:" + pygame.key.name(c.LEFT_JOY_UP) +":"+ str(c.LEFT_JOY_UP))
+config_menu_items.append("LEFT_JOY_DOWN:" + pygame.key.name(c.LEFT_JOY_DOWN) +":"+ str(c.LEFT_JOY_DOWN))
+config_menu_items.append("RIGHT_JOY_UP:" + pygame.key.name(c.RIGHT_JOY_UP) +":"+ str(c.RIGHT_JOY_UP))
+config_menu_items.append("RIGHT_JOY_DOWN:" + pygame.key.name(c.RIGHT_JOY_DOWN) +":"+ str(c.RIGHT_JOY_DOWN))
+config_menu_items.append("LEFT_LIMIT_TOP:" + pygame.key.name(c.LEFT_LIMIT_TOP) +":"+ str(c.LEFT_LIMIT_TOP))
+config_menu_items.append("LEFT_LIMIT_BOTTOM:" + pygame.key.name(c.LEFT_LIMIT_BOTTOM) +":"+ str(c.LEFT_LIMIT_BOTTOM))
+config_menu_items.append("RIGHT_LIMIT_TOP:" + pygame.key.name(c.RIGHT_LIMIT_TOP) +":"+ str(c.RIGHT_LIMIT_TOP))
+config_menu_items.append("RIGHT_LIMIT_BOTTOM:" + pygame.key.name(c.RIGHT_LIMIT_BOTTOM) +":"+ str(c.RIGHT_LIMIT_BOTTOM))
+config_menu_items.append("START_BUTTON:" + pygame.key.name(c.START_BUTTON) +":"+ str(c.START_BUTTON))
+config_menu_items.append("SERVICE_BUTTON:" + pygame.key.name(c.SERVICE_BUTTON) +":"+ str(c.SERVICE_BUTTON))
+config_menu_items.append("TILT_SWITCH:" + pygame.key.name(c.TILT_SWITCH) +":"+ str(c.TILT_SWITCH))
+config_menu_items.append("HOLE_1_SWITCH:" + pygame.key.name(c.HOLE_1_SWITCH) +":"+ str(c.HOLE_1_SWITCH))
+config_menu_items.append("HOLE_2_SWITCH:" + pygame.key.name(c.HOLE_2_SWITCH) +":"+ str(c.HOLE_2_SWITCH))
+config_menu_items.append("HOLE_3_SWITCH:" + pygame.key.name(c.HOLE_3_SWITCH) +":"+ str(c.HOLE_3_SWITCH))
+config_menu_items.append("HOLE_4_SWITCH:" + pygame.key.name(c.HOLE_4_SWITCH) +":"+ str(c.HOLE_4_SWITCH))
+config_menu_items.append("HOLE_5_SWITCH:" + pygame.key.name(c.HOLE_5_SWITCH) +":"+ str(c.HOLE_5_SWITCH))
+config_menu_items.append("HOLE_6_SWITCH:" + pygame.key.name(c.HOLE_6_SWITCH) +":"+ str(c.HOLE_6_SWITCH))
+config_menu_items.append("HOLE_7_SWITCH:" + pygame.key.name(c.HOLE_7_SWITCH) +":"+ str(c.HOLE_7_SWITCH))
+config_menu_items.append("HOLE_8_SWITCH:" + pygame.key.name(c.HOLE_8_SWITCH) +":"+ str(c.HOLE_8_SWITCH))
+config_menu_items.append("HOLE_9_SWITCH:" + pygame.key.name(c.HOLE_9_SWITCH) +":"+ str(c.HOLE_9_SWITCH))
+config_menu_items.append("HOLE_10_SWITCH:" + pygame.key.name(c.HOLE_10_SWITCH) +":"+ str(c.HOLE_10_SWITCH))
+config_menu_items.append("HOLE_FAILURE_SWITCH:" + pygame.key.name(c.HOLE_FAILURE_SWITCH) +":"+ str(c.HOLE_FAILURE_SWITCH))
+
+
+
 
 global selected_menu
 selected_menu = "main"
@@ -72,8 +94,7 @@ class ServiceMenuMode(tools.ModeBase):
                             menu_item_total = len(config_menu_items)
                             
                     #elif selected_menu == main_menu_items[0]:
-                        #code for selecting item in main menu item 1 (config)
-                        #need code for this
+                        #code for selecting item in main menu (config)
                         
                 
                 
