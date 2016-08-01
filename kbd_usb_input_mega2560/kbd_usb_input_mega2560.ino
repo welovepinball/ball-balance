@@ -35,7 +35,6 @@ void loop()
 
   //loop through input 1-53 and assign a scancode
   for (pin=2;pin<54;pin=pin+1){
-      pinMode(pin,INPUT_PULLUP);
       if( digitalRead(pin) == 0){
           buf[i] = pin+2;
           if (i<8){
