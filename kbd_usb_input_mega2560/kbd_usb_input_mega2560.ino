@@ -1,12 +1,10 @@
 /* Arduino USB Keyboard HID demo
 *
-* Sends Volume up, hello world, and Volume Down to the host PC
+* Turns inputs 2-53 into keyboard keystrokes by grounding the pin
 *
 */
 
-/* Author: Darran Hunt
- * Released into the public domain.
- */
+
 
 uint8_t buf[8] = { 0 };	/* Keyboard report buffer */
 int pin;
