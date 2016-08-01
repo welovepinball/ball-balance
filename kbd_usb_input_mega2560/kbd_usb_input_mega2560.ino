@@ -1,4 +1,4 @@
-/* Arduino USB Keyboard HID demo
+/* Arduino USB Keyboard HID input for ICB type game
 *
 * Turns inputs 2-53 into keyboard keystrokes by grounding the pin
 *
@@ -11,14 +11,6 @@ int pin;
 
 void setup();
 void loop();
-
-#define KEY_LEFT_CTRL	0x01
-#define KEY_LEFT_SHIFT	0x02
-#define KEY_RIGHT_CTRL	0x10
-#define KEY_RIGHT_SHIFT	0x20
-
-
-
 
 void setup()
 {
