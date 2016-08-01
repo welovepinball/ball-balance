@@ -19,6 +19,8 @@ class AttractMode(tools.ModeBase):
 
     def Render(self, screen):
         """Render output. """
+        # hide cursor
+        pygame.mouse.set_visible(False)
 
         # Just fill the screen with all red
         screen.fill((255, 0, 0))
