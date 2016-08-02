@@ -1,6 +1,7 @@
 import pygame
 import tools
 import config as c
+import motors as m
 
 class GameMode(tools.ModeBase):
 
@@ -58,13 +59,13 @@ class GameMode(tools.ModeBase):
 
                 # Joy stick released - stop motor
                 elif event.key == c.LEFT_JOY_UP:
-                    c.move_motor("left",0)
+                    m.move_motor("left",0)
                 elif event.key == c.LEFT_JOY_DOWN:
-                    c.move_motor("left",0)
+                    m.move_motor("left",0)
                 elif event.key == c.RIGHT_JOY_UP:
-                    c.move_motor("right",0)
+                    m.move_motor("right",0)
                 elif event.key == c.RIGHT_JOY_DOWN:
-                    c.move_motor("right",0)
+                    m.move_motor("right",0)
                 
 
         pressed = pygame.key.get_pressed()
@@ -73,19 +74,19 @@ class GameMode(tools.ModeBase):
         if pressed[c.LEFT_JOY_UP] and not self.limitLeftUp:
             self.leftBarPosition  -= 3
             tools.play_sound(c.AUDIO_ROD_LEFT_UP)
-            c.move_motor("left",7.5-c.motor_speed)
+            m.move_motor("left",7.5-c.motor_speed)
         if pressed[c.LEFT_JOY_DOWN] and not self.limitLeftDown:
             self.leftBarPosition  += 3
             tools.play_sound(c.AUDIO_ROD_LEFT_DOWN)
-            c.move_motor("left",7.5+c.motor_speed)
+            m.move_motor("left",7.5+c.motor_speed)
         if pressed[c.RIGHT_JOY_UP] and not self.limitRightUp:
             self.rightBarPosition -= 3
             tools.play_sound(c.AUDIO_ROD_RIGHT_UP)
-            c.move_motor("right",7.5-c.motor_speed)
+            m.move_motor("right",7.5-c.motor_speed)
         if pressed[c.RIGHT_JOY_DOWN] and not self.limitRightDown:
             self.rightBarPosition += 3
             tools.play_sound(c.AUDIO_ROD_RIGHT_DOWN)
-            c.move_motor("right",7.5+c.motor_speed)
+            m.move_motor("right",7.5+c.motor_speed)
 
 
     def Render(self, screen):
