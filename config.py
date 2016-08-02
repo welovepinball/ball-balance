@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 try:
     import RPi.GPIO as GPIO
