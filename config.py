@@ -12,7 +12,10 @@ except:
 #########################################################################
 
 #opens controller config file, reads in values, and applies them to keys
-control_config_file = open(sys.path[0] + "\\" +"control_config.txt", "r")
+try:
+    control_config_file = open(sys.path[0] + "\\" +"control_config.txt", "r")
+except:
+    control_config_file = open(sys.path[0] + "/" +"control_config.txt", "r")
 
 keyinput = []
 for line in control_config_file:
