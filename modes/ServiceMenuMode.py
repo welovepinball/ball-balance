@@ -92,16 +92,21 @@ class ServiceMenuMode(tools.ModeBase):
 
                         i=0
                         formatted_text = ""
+                        
 
+                        #loop through and write each line in the config file
                         while i <= len(config_menu_items)-1:
                             formatted_text = config_menu_items[i]
-                            formatted_text = formatted_text[:formatted_text.find(":")]
-                            formatted_text = formatted_text +"=" + str(new_keys[i]) + '\n'
+                            formatted_text = formatted_text[:formatted_text.find('\n')]
+                            formatted_text = formatted_text +"=" + str(new_keys[i])
+                            if i<len(config_menu_items)-1:
+                                formatted_text = formatted_text + "=" + '\n'
                             control_config_file.write(formatted_text)
                             i+=1
 
-
                         control_config_file.close
+
+                        #re-assign keys in the open instance of the game to match new configuration
                         c.LEFT_JOY_UP=new_keys[0]
                         c.LEFT_JOY_DOWN=new_keys[1]
                         c.RIGHT_JOY_UP=new_keys[2]
@@ -124,7 +129,8 @@ class ServiceMenuMode(tools.ModeBase):
                         c.HOLES_SWITCHES[9]=new_keys[19]
                         c.HOLES_SWITCHES[10]=new_keys[20]
                         c.HOLE_FAILURE_SWITCH=new_keys[21]
-
+                        
+                        #initialize new_keys array so that the controls can be assigned again by entering the config menu
                         new_keys = []
 
                         config_menu_current_switch = len(config_menu_items)-1
@@ -286,9 +292,9 @@ class ServiceMenuMode(tools.ModeBase):
             str_part3 = str_part2[str_part2.find('\n')+1:]
             str_part2 = str_part2[:str_part2.find('\n')]
 
-            #print ("string 1: " + str_part1)
-            #print ("string 2: " +str_part2)
-            #print ("string 3: " +str_part3)
+            print ("string 1: " + str_part1)
+            print ("string 2: " +str_part2)
+            print ("string 3: " +str_part3)
 
             #display separate strings in meaningful way
             font = pygame.font.Font(None, 25)
