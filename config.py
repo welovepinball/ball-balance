@@ -43,7 +43,7 @@ for line in control_config_file:
     line = line[line.find("=") + 1:]
     if '\n' in line:
         line = line[:len(line) - 1]
-    print(line)
+    #print(line)
     keyinput.append(int(line))
 
 LEFT_JOY_UP    = keyinput[0]
