@@ -1,93 +1,85 @@
-import pygame
+import os
+
 import sys
 
-#########################################################################
-# Motors
-#########################################################################
-# Change pin number to change the corresponding GPIO for the left and right motors.
-l_motor_rpi_pin = 12
-r_motor_rpi_pin = 40
-
-# Set speed of motor between 0 (no motion) and 2.5 (max speed).
-motor_speed = 2.5
+import pygame
 
 
 
-#########################################################################
+#---------------------------------------------------------------------
+# Graphics
+#---------------------------------------------------------------------
+
+SCREEN_WIDTH  = 640
+SCREEN_HEIGHT = 480
+
+
+
+#---------------------------------------------------------------------
+# Servos
+#---------------------------------------------------------------------
+
+# Change pin number to change the corresponding GPIO for the left and right servos.
+RPI_PIN_LEFT_SERVO  = 12
+RPI_PIN_RIGHT_SERVO = 40
+
+# Set speed of servo between 0 (no motion) and 2.5 (max speed).
+SERVO_SPEED = 2.5
+
+
+
+#---------------------------------------------------------------------
 # Switches
-#########################################################################
+#---------------------------------------------------------------------
 
-#opens controller config file, reads in values, and applies them to keys
-try:
-    control_config_file = open(sys.path[0] + "\\" +"control_config.txt", "r")
-except:
-    control_config_file = open(sys.path[0] + "/" +"control_config.txt", "r")
+# Opens control config file, reads in values, and apply them to keys
+control_config_path = sys.path[0] + "/control_config.txt"
+canonicalized_path = control_config_path.replace('/', os.sep).replace('\\', os.sep)
+
+control_config_file = open(canonicalized_path, "r")
 
 keyinput = []
 for line in control_config_file:
-    line = line[line.find("=")+1:]
-    line = line[:len(line)-1]
-    #print (line)
+    line = line[line.find("=") + 1:]
+    line = line[:len(line) - 1]
+
     keyinput.append(int(line))
 
-LEFT_JOY_UP=keyinput[0]
-LEFT_JOY_DOWN=keyinput[1]
-RIGHT_JOY_UP=keyinput[2]
-RIGHT_JOY_DOWN=keyinput[3]
-LEFT_LIMIT_TOP=keyinput[4]
-LEFT_LIMIT_BOTTOM=keyinput[5]
-RIGHT_LIMIT_TOP=keyinput[6]
-RIGHT_LIMIT_BOTTOM=keyinput[7]
-START_BUTTON=keyinput[8]
-SERVICE_BUTTON=keyinput[9]
-TILT_SWITCH=keyinput[10]
-HOLE_1_SWITCH=keyinput[11]
-HOLE_2_SWITCH=keyinput[12]
-HOLE_3_SWITCH=keyinput[13]
-HOLE_4_SWITCH=keyinput[14]
-HOLE_5_SWITCH=keyinput[15]
-HOLE_6_SWITCH=keyinput[16]
-HOLE_7_SWITCH=keyinput[17]
-HOLE_8_SWITCH=keyinput[18]
-HOLE_9_SWITCH=keyinput[19]
-HOLE_10_SWITCH=keyinput[20]
+LEFT_JOY_UP    = keyinput[0]
+LEFT_JOY_DOWN  = keyinput[1]
+RIGHT_JOY_UP   = keyinput[2]
+RIGHT_JOY_DOWN = keyinput[3]
+
+LEFT_LIMIT_TOP     = keyinput[4]
+LEFT_LIMIT_BOTTOM  = keyinput[5]
+RIGHT_LIMIT_TOP    = keyinput[6]
+RIGHT_LIMIT_BOTTOM = keyinput[7]
+
+START_BUTTON   = keyinput[8]
+SERVICE_BUTTON = keyinput[9]
+TILT_SWITCH    = keyinput[10]
+
+HOLES_SWITCHES = {
+    1:  keyinput[11],
+    2:  keyinput[12],
+    3:  keyinput[13],
+    4:  keyinput[14],
+    5:  keyinput[15],
+    6:  keyinput[16],
+    7:  keyinput[17],
+    8:  keyinput[18],
+    9:  keyinput[19],
+    10: keyinput[20]
+}
 HOLE_FAILURE_SWITCH=keyinput[21]
-    
+
 control_config_file.close()
 
-##LEFT_JOY_UP    = pygame.K_w
-##LEFT_JOY_DOWN  = pygame.K_s
-##RIGHT_JOY_UP   = pygame.K_UP
-##RIGHT_JOY_DOWN = pygame.K_DOWN
-##
-##LEFT_LIMIT_TOP     = pygame.K_LEFTBRACKET
-##LEFT_LIMIT_BOTTOM  = pygame.K_SEMICOLON
-##RIGHT_LIMIT_TOP    = pygame.K_RIGHTBRACKET
-##RIGHT_LIMIT_BOTTOM = pygame.K_QUOTE
-##
-##START_BUTTON = pygame.K_RETURN
-##
-##SERVICE_BUTTON = pygame.K_F1
-##
-##TILT_SWITCH = pygame.K_BACKSPACE
-##
-##HOLE_1_SWITCH  = pygame.K_1
-##HOLE_2_SWITCH  = pygame.K_2
-##HOLE_3_SWITCH  = pygame.K_3
-##HOLE_4_SWITCH  = pygame.K_4
-##HOLE_5_SWITCH  = pygame.K_5
-##HOLE_6_SWITCH  = pygame.K_6
-##HOLE_7_SWITCH  = pygame.K_7
-##HOLE_8_SWITCH  = pygame.K_8
-##HOLE_9_SWITCH  = pygame.K_9
-##HOLE_10_SWITCH = pygame.K_0
-##HOLE_FAILURE_SWITCH = pygame.K_x
 
 
-
-#########################################################################
+#---------------------------------------------------------------------
 # Audio
-#########################################################################
+#---------------------------------------------------------------------
 
 AUDIO_BONUS          = '../audio/bonus.wav'
 AUDIO_EXTRA_BALL     = '../audio/extra-ball.wav'
@@ -105,274 +97,145 @@ AUDIO_WIN            = '../audio/win.wav'
 
 
 
-#########################################################################
-#### KEY LOOKUP
-#########################################################################
+#---------------------------------------------------------------------
+# Key Lookup
+#---------------------------------------------------------------------
 
-def key_name_lookup(index_val):
-    if index_val == 8:
-        return "K_BACKSPACE"
-    elif index_val == 9:
-        return "K_TAB"
-    elif index_val == 12:
-        return "K_CLEAR"
-    elif index_val == 13:
-        return "K_RETURN"
-    elif index_val == 19:
-        return "K_PAUSE"
-    elif index_val == 27:
-        return "K_ESCAPE"
-    elif index_val == 32:
-        return "K_SPACE"
-    elif index_val == 33:
-        return "K_EXCLAIM"
-    elif index_val == 34:
-        return "K_QUOTEDBL"
-    elif index_val == 35:
-        return "K_HASH"
-    elif index_val == 36:
-        return "K_DOLLAR"
-    elif index_val == 38:
-        return "K_AMPERSAND"
-    elif index_val == 39:
-        return "K_QUOTE"
-    elif index_val == 40:
-        return "K_LEFTPAREN"
-    elif index_val == 41:
-        return "K_RIGHTPAREN"
-    elif index_val == 42:
-        return "K_ASTERISK"
-    elif index_val == 43:
-        return "K_PLUS"
-    elif index_val == 44:
-        return "K_COMMA"
-    elif index_val == 45:
-        return "K_MINUS"
-    elif index_val == 46:
-        return "K_PERIOD"
-    elif index_val == 47:
-        return "K_SLASH"
-    elif index_val == 48:
-        return "K_0"
-    elif index_val == 49:
-        return "K_1"
-    elif index_val == 50:
-        return "K_2"
-    elif index_val == 51:
-        return "K_3"
-    elif index_val == 52:
-        return "K_4"
-    elif index_val == 53:
-        return "K_5"
-    elif index_val == 54:
-        return "K_6"
-    elif index_val == 55:
-        return "K_7"
-    elif index_val == 56:
-        return "K_8"
-    elif index_val == 57:
-        return "K_9"
-    elif index_val == 58:
-        return "K_COLON"
-    elif index_val == 59:
-        return "K_SEMICOLON"
-    elif index_val == 60:
-        return "K_LESS"
-    elif index_val == 61:
-        return "K_EQUALS"
-    elif index_val == 62:
-        return "K_GREATER"
-    elif index_val == 63:
-        return "K_QUESTION"
-    elif index_val == 64:
-        return "K_AT"
-    elif index_val == 91:
-        return "K_LEFTBRACKET"
-    elif index_val == 92:
-        return "K_BACKSLASH"
-    elif index_val == 93:
-        return "K_RIGHTBRACKET"
-    elif index_val == 94:
-        return "K_CARET"
-    elif index_val == 95:
-        return "K_UNDERSCORE"
-    elif index_val == 96:
-        return "K_BACKQUOTE"
-    elif index_val == 97:
-        return "K_a"
-    elif index_val == 98:
-        return "K_b"
-    elif index_val == 99:
-        return "K_c"
-    elif index_val == 100:
-        return "K_d"
-    elif index_val == 101:
-        return "K_e"
-    elif index_val == 102:
-        return "K_f"
-    elif index_val == 103:
-        return "K_g"
-    elif index_val == 104:
-        return "K_h"
-    elif index_val == 105:
-        return "K_i"
-    elif index_val == 106:
-        return "K_j"
-    elif index_val == 107:
-        return "K_k"
-    elif index_val == 108:
-        return "K_l"
-    elif index_val == 109:
-        return "K_m"
-    elif index_val == 110:
-        return "K_n"
-    elif index_val == 111:
-        return "K_o"
-    elif index_val == 112:
-        return "K_p"
-    elif index_val == 113:
-        return "K_q"
-    elif index_val == 114:
-        return "K_r"
-    elif index_val == 115:
-        return "K_s"
-    elif index_val == 116:
-        return "K_t"
-    elif index_val == 117:
-        return "K_u"
-    elif index_val == 118:
-        return "K_v"
-    elif index_val == 119:
-        return "K_w"
-    elif index_val == 120:
-        return "K_x"
-    elif index_val == 121:
-        return "K_y"
-    elif index_val == 122:
-        return "K_z"
-    elif index_val == 127:
-        return "K_DELETE"
-    elif index_val == 256:
-        return "K_KP0"
-    elif index_val == 257:
-        return "K_KP1"
-    elif index_val == 258:
-        return "K_KP2"
-    elif index_val == 259:
-        return "K_KP3"
-    elif index_val == 260:
-        return "K_KP4"
-    elif index_val == 261:
-        return "K_KP5"
-    elif index_val == 262:
-        return "K_KP6"
-    elif index_val == 263:
-        return "K_KP7"
-    elif index_val == 264:
-        return "K_KP8"
-    elif index_val == 265:
-        return "K_KP9"
-    elif index_val == 266:
-        return "K_KP_PERIOD"
-    elif index_val == 267:
-        return "K_KP_DIVIDE"
-    elif index_val == 268:
-        return "K_KP_MULTIPLY"
-    elif index_val == 269:
-        return "K_KP_MINUS"
-    elif index_val == 270:
-        return "K_KP_PLUS"
-    elif index_val == 271:
-        return "K_KP_ENTER"
-    elif index_val == 272:
-        return "K_KP_EQUALS"
-    elif index_val == 273:
-        return "K_UP"
-    elif index_val == 274:
-        return "K_DOWN"
-    elif index_val == 275:
-        return "K_RIGHT"
-    elif index_val == 276:
-        return "K_LEFT"
-    elif index_val == 277:
-        return "K_INSERT"
-    elif index_val == 278:
-        return "K_HOME"
-    elif index_val == 279:
-        return "K_END"
-    elif index_val == 280:
-        return "K_PAGEUP"
-    elif index_val == 281:
-        return "K_PAGEDOWN"
-    elif index_val == 282:
-        return "K_F1"
-    elif index_val == 283:
-        return "K_F2"
-    elif index_val == 284:
-        return "K_F3"
-    elif index_val == 285:
-        return "K_F4"
-    elif index_val == 286:
-        return "K_F5"
-    elif index_val == 287:
-        return "K_F6"
-    elif index_val == 288:
-        return "K_F7"
-    elif index_val == 289:
-        return "K_F8"
-    elif index_val == 290:
-        return "K_F9"
-    elif index_val == 291:
-        return "K_F10"
-    elif index_val == 292:
-        return "K_F11"
-    elif index_val == 293:
-        return "K_F12"
-    elif index_val == 294:
-        return "K_F13"
-    elif index_val == 295:
-        return "K_F14"
-    elif index_val == 296:
-        return "K_F15"
-    elif index_val == 300:
-        return "K_NUMLOCK"
-    elif index_val == 301:
-        return "K_CAPSLOCK"
-    elif index_val == 302:
-        return "K_SCROLLOCK"
-    elif index_val == 303:
-        return "K_RSHIFT"
-    elif index_val == 304:
-        return "K_LSHIFT"
-    elif index_val == 305:
-        return "K_RCTRL"
-    elif index_val == 306:
-        return "K_LCTRL"
-    elif index_val == 307:
-        return "K_RALT"
-    elif index_val == 308:
-        return "K_LALT"
-    elif index_val == 309:
-        return "K_RMETA"
-    elif index_val == 310:
-        return "K_LMETA"
-    elif index_val == 311:
-        return "K_LSUPER"
-    elif index_val == 312:
-        return "K_RSUPER"
-    elif index_val == 313:
-        return "K_MODE"
-    elif index_val == 315:
-        return "K_HELP"
-    elif index_val == 316:
-        return "K_PRINT"
-    elif index_val == 317:
-        return "K_SYSREQ"
-    elif index_val == 318:
-        return "K_BREAK"
-    elif index_val == 319:
-        return "K_MENU"
-    elif index_val == 320:
-        return "K_POWER"
-    elif index_val == 321:
-        return "K_EURO"
+def key_name_lookup(key):
+    legend = {
+        8: 'K_BACKSPACE',
+        9: 'K_TAB',
+        12: 'K_CLEAR',
+        13: 'K_RETURN',
+        19: 'K_PAUSE',
+        27: 'K_ESCAPE',
+        32: 'K_SPACE',
+        33: 'K_EXCLAIM',
+        34: 'K_QUOTEDBL',
+        35: 'K_HASH',
+        36: 'K_DOLLAR',
+        38: 'K_AMPERSAND',
+        39: 'K_QUOTE',
+        40: 'K_LEFTPAREN',
+        41: 'K_RIGHTPAREN',
+        42: 'K_ASTERISK',
+        43: 'K_PLUS',
+        44: 'K_COMMA',
+        45: 'K_MINUS',
+        46: 'K_PERIOD',
+        47: 'K_SLASH',
+        48: 'K_0',
+        49: 'K_1',
+        50: 'K_2',
+        51: 'K_3',
+        52: 'K_4',
+        53: 'K_5',
+        54: 'K_6',
+        55: 'K_7',
+        56: 'K_8',
+        57: 'K_9',
+        58: 'K_COLON',
+        59: 'K_SEMICOLON',
+        60: 'K_LESS',
+        61: 'K_EQUALS',
+        62: 'K_GREATER',
+        63: 'K_QUESTION',
+        64: 'K_AT',
+        91: 'K_LEFTBRACKET',
+        92: 'K_BACKSLASH',
+        93: 'K_RIGHTBRACKET',
+        94: 'K_CARET',
+        95: 'K_UNDERSCORE',
+        96: 'K_BACKQUOTE',
+        97: 'K_a',
+        98: 'K_b',
+        99: 'K_c',
+        100: 'K_d',
+        101: 'K_e',
+        102: 'K_f',
+        103: 'K_g',
+        104: 'K_h',
+        105: 'K_i',
+        106: 'K_j',
+        107: 'K_k',
+        108: 'K_l',
+        109: 'K_m',
+        110: 'K_n',
+        111: 'K_o',
+        112: 'K_p',
+        113: 'K_q',
+        114: 'K_r',
+        115: 'K_s',
+        116: 'K_t',
+        117: 'K_u',
+        118: 'K_v',
+        119: 'K_w',
+        120: 'K_x',
+        121: 'K_y',
+        122: 'K_z',
+        127: 'K_DELETE',
+        256: 'K_KP0',
+        257: 'K_KP1',
+        258: 'K_KP2',
+        259: 'K_KP3',
+        260: 'K_KP4',
+        261: 'K_KP5',
+        262: 'K_KP6',
+        263: 'K_KP7',
+        264: 'K_KP8',
+        265: 'K_KP9',
+        266: 'K_KP_PERIOD',
+        267: 'K_KP_DIVIDE',
+        268: '_KP_MULTIPLY',
+        269: 'K_KP_MINUS',
+        270: 'K_KP_PLUS',
+        271: 'K_KP_ENTER',
+        272: 'K_KP_EQUALS',
+        273: 'K_UP',
+        274: 'K_DOWN',
+        275: 'K_RIGHT',
+        276: 'K_LEFT',
+        277: 'K_INSERT',
+        278: 'K_HOME',
+        279: 'K_END',
+        280: 'K_PAGEUP',
+        281: 'K_PAGEDOWN',
+        282: 'K_F1',
+        283: 'K_F2',
+        284: 'K_F3',
+        285: 'K_F4',
+        286: 'K_F5',
+        287: 'K_F6',
+        288: 'K_F7',
+        289: 'K_F8',
+        290: 'K_F9',
+        291: 'K_F10',
+        292: 'K_F11',
+        293: 'K_F12',
+        294: 'K_F13',
+        295: 'K_F14',
+        296: 'K_F15',
+        300: 'K_NUMLOCK',
+        301: 'K_CAPSLOCK',
+        302: 'K_SCROLLOCK',
+        303: 'K_RSHIFT',
+        304: 'K_LSHIFT',
+        305: 'K_RCTRL',
+        306: 'K_LCTRL',
+        307: 'K_RALT',
+        308: 'K_LALT',
+        309: 'K_RMETA',
+        310: 'K_LMETA',
+        311: 'K_LSUPER',
+        312: 'K_RSUPER',
+        313: 'K_MODE',
+        315: 'K_HELP',
+        316: 'K_PRINT',
+        317: 'K_SYSREQ',
+        318: 'K_BREAK',
+        319: 'K_MENU',
+        320: 'K_POWER',
+        321: 'K_EURO'
+    }
+
+    return legend[key]

@@ -1,4 +1,5 @@
 import pygame
+
 import tools
 
 import config as c
@@ -6,21 +7,19 @@ import config as c
 
 
 class AttractMode(tools.ModeBase):
-    """Serves as the attract mode for the game. Placeholder for now. """
 
-    def ProcessInput(self, events, pressed_keys):
-        """Process the filtered list of events. """
+    def __init__(self, rod):
+        self.rod = rod
 
+
+    def process(self, events, pressed_keys):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == c.START_BUTTON:
                     # Move to the next mode when the user presses the Start button
-                    self.SwitchToMode(c.GAME_MODE)
+                    self.switch_to_mode(c.GAME_MODE)
 
-    def Render(self, screen):
-        """Render output. """
-        # hide cursor
-        pygame.mouse.set_visible(False)
 
+    def render(self, screen):
         # Just fill the screen with all red
         screen.fill((255, 0, 0))
