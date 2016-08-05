@@ -292,9 +292,9 @@ class ServiceMenuMode(tools.ModeBase):
             str_part3 = str_part2[str_part2.find('\n')+1:]
             str_part2 = str_part2[:str_part2.find('\n')]
 
-            print ("string 1: " + str_part1)
-            print ("string 2: " +str_part2)
-            print ("string 3: " +str_part3)
+            #print ("string 1: " + str_part1)
+            #print ("string 2: " +str_part2)
+            #print ("string 3: " +str_part3)
 
             #display separate strings in meaningful way
             font = pygame.font.Font(None, 25)
