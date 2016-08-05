@@ -100,7 +100,7 @@ class ServiceMenuMode(tools.ModeBase):
                             formatted_text = formatted_text[:formatted_text.find('\n')]
                             formatted_text = formatted_text +"=" + str(new_keys[i])
                             if i<len(config_menu_items)-1:
-                                formatted_text = formatted_text + "=" + '\n'
+                                formatted_text = formatted_text + '\n'
                             control_config_file.write(formatted_text)
                             i+=1
 
