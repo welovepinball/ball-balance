@@ -41,8 +41,9 @@ control_config_file = open(canonicalized_path, "r")
 keyinput = []
 for line in control_config_file:
     line = line[line.find("=") + 1:]
-    line = line[:len(line) - 1]
-
+    if '\n' in line:
+        line = line[:len(line) - 1]
+    print(line)
     keyinput.append(int(line))
 
 LEFT_JOY_UP    = keyinput[0]
