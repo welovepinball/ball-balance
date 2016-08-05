@@ -34,16 +34,16 @@ config_menu_items.append("RIGHT_LIMIT_BOTTOM" + '\n' + "Current Key: " + c.key_n
 config_menu_items.append("START_BUTTON" + '\n' + "Current Key: " + c.key_name_lookup(c.START_BUTTON) + '\n' + "Current Value: "+ str(c.START_BUTTON))
 config_menu_items.append("SERVICE_BUTTON" + '\n' + "Current Key: " + c.key_name_lookup(c.SERVICE_BUTTON) + '\n' + "Current Value: "+ str(c.SERVICE_BUTTON))
 config_menu_items.append("TILT_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.TILT_SWITCH) + '\n' + "Current Value: "+ str(c.TILT_SWITCH))
-config_menu_items.append("HOLE_1_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_1_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_1_SWITCH))
-config_menu_items.append("HOLE_2_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_2_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_2_SWITCH))
-config_menu_items.append("HOLE_3_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_3_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_3_SWITCH))
-config_menu_items.append("HOLE_4_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_4_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_4_SWITCH))
-config_menu_items.append("HOLE_5_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_5_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_5_SWITCH))
-config_menu_items.append("HOLE_6_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_6_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_6_SWITCH))
-config_menu_items.append("HOLE_7_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_7_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_7_SWITCH))
-config_menu_items.append("HOLE_8_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_8_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_8_SWITCH))
-config_menu_items.append("HOLE_9_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_9_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_9_SWITCH))
-config_menu_items.append("HOLE_10_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_10_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_10_SWITCH))
+config_menu_items.append("HOLE_1_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[1]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[1]))
+config_menu_items.append("HOLE_2_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[2]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[2]))
+config_menu_items.append("HOLE_3_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[3]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[3]))
+config_menu_items.append("HOLE_4_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[4]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[4]))
+config_menu_items.append("HOLE_5_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[5]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[5]))
+config_menu_items.append("HOLE_6_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[6]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[6]))
+config_menu_items.append("HOLE_7_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[7]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[7]))
+config_menu_items.append("HOLE_8_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[8]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[8]))
+config_menu_items.append("HOLE_9_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[9]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[9]))
+config_menu_items.append("HOLE_10_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLES_SWITCHES[10]) + '\n' + "Current Value: "+ str(c.HOLES_SWITCHES[10]))
 config_menu_items.append("HOLE_FAILURE_SWITCH" + '\n' + "Current Key: " + c.key_name_lookup(c.HOLE_FAILURE_SWITCH) + '\n' + "Current Value: "+ str(c.HOLE_FAILURE_SWITCH))
 
 global new_keys
@@ -56,7 +56,7 @@ selected_menu = "main"
 class ServiceMenuMode(tools.ModeBase):
     """Serves as the service menu for the game. Placeholder for now. """
 
-    def ProcessInput(self, events, pressed_keys):
+    def process(self, events, pressed_keys):
         """Process the filtered list of events. """
         global current_menu
 
@@ -69,7 +69,7 @@ class ServiceMenuMode(tools.ModeBase):
         global main_menu_items
         global new_keys
         global new_key_check
-        
+
 
         for event in events:
             if event.type == pygame.KEYDOWN:
@@ -80,11 +80,11 @@ class ServiceMenuMode(tools.ModeBase):
                         for key in new_keys:
                             if key == event.key:
                                 new_key_check = 0
-                    
+
                     if new_key_check == 1:
                         new_keys.append(event.key)
                         config_menu_current_switch += 1
-                
+
                     if config_menu_current_switch > len(config_menu_items)-1:
                         #save out changes to control config file
                         #opens controller config file, reads in values, and applies them to keys
@@ -113,34 +113,34 @@ class ServiceMenuMode(tools.ModeBase):
                         c.START_BUTTON=new_keys[8]
                         c.SERVICE_BUTTON=new_keys[9]
                         c.TILT_SWITCH=new_keys[10]
-                        c.HOLE_1_SWITCH=new_keys[11]
-                        c.HOLE_2_SWITCH=new_keys[12]
-                        c.HOLE_3_SWITCH=new_keys[13]
-                        c.HOLE_4_SWITCH=new_keys[14]
-                        c.HOLE_5_SWITCH=new_keys[15]
-                        c.HOLE_6_SWITCH=new_keys[16]
-                        c.HOLE_7_SWITCH=new_keys[17]
-                        c.HOLE_8_SWITCH=new_keys[18]
-                        c.HOLE_9_SWITCH=new_keys[19]
-                        c.HOLE_10_SWITCH=new_keys[20]
+                        c.HOLES_SWITCHES[1]=new_keys[11]
+                        c.HOLES_SWITCHES[2]=new_keys[12]
+                        c.HOLES_SWITCHES[3]=new_keys[13]
+                        c.HOLES_SWITCHES[4]=new_keys[14]
+                        c.HOLES_SWITCHES[5]=new_keys[15]
+                        c.HOLES_SWITCHES[6]=new_keys[16]
+                        c.HOLES_SWITCHES[7]=new_keys[17]
+                        c.HOLES_SWITCHES[8]=new_keys[18]
+                        c.HOLES_SWITCHES[9]=new_keys[19]
+                        c.HOLES_SWITCHES[10]=new_keys[20]
                         c.HOLE_FAILURE_SWITCH=new_keys[21]
 
                         new_keys = []
 
                         config_menu_current_switch = len(config_menu_items)-1
                         selected_menu = "main"
-                        
-                        
+
+
                 if event.key == c.SERVICE_BUTTON:
                     if selected_menu=="main":
                         # Exit service menu and start to attract mode when the user presses the Service button
-                        self.SwitchToMode(c.ATTRACT_MODE)
+                        self.switch_to_mode(c.ATTRACT_MODE)
                     elif selected_menu != main_menu_items[0]:
                         # Return to service main menu if on another menu besides config
                         selected_menu = "main"
                         menu_item_total = len(main_menu_items)
                         current_menu_item = 1
-                        
+
                 elif event.key == c.LEFT_JOY_UP:
                     # Move up in menu
                     current_menu_item -= 1
@@ -165,19 +165,19 @@ class ServiceMenuMode(tools.ModeBase):
                             ######### FROM TROUGH TO ROD
                             ########################################
                             #######################################
-                            
+
                             config_menu_current_switch = 0
-                            
-                            
+
+
                     #elif selected_menu == main_menu_items[0]:
                         #code for selecting item in main menu (config)
-                
-                        
-                
-                
 
 
-    def Render(self, screen):
+
+
+
+
+    def render(self, screen):
         """Render output. """
 
         # Fill background with blue
@@ -187,7 +187,7 @@ class ServiceMenuMode(tools.ModeBase):
 
         # MAIN MENU
         if selected_menu=="main":
-        
+
             # Display menu name at top center
             font = pygame.font.Font(None, 36)
             text = font.render("Service Menu", 1, (255, 255, 255))
@@ -195,7 +195,7 @@ class ServiceMenuMode(tools.ModeBase):
             textpos.centerx = background.get_rect().centerx
             background.blit(text, textpos)
             prevpos = textpos
-            
+
             # Display instructional text under previous entry - edit font size and color in the next 2 lines
             font = pygame.font.Font(None, 19)
             text = font.render("-Left Joystick to navigate", 1, (255, 255, 0))
@@ -238,13 +238,13 @@ class ServiceMenuMode(tools.ModeBase):
                     text = font.render("-" + menu_item, 1, (255, 255, 0))
                 else:
                     text = font.render(menu_item, 1, (255, 255, 255))
-                    
+
                 textpos = text.get_rect()
                 textpos.top = (prevpos.bottom+5)
                 textpos.left  = 50
                 background.blit(text, textpos)
                 prevpos = textpos
-            
+
         #Control Config Menu
         elif selected_menu== main_menu_items[0]:
             # Display menu name at top center
@@ -263,8 +263,8 @@ class ServiceMenuMode(tools.ModeBase):
             background.blit(text, textpos)
             prevpos = textpos
 
-            
-            
+
+
             # Display instructional text under previous entry - edit font size and color in the next 2 lines
             font = pygame.font.Font(None, 25)
             text = font.render("Activate the switch for:", 1, (255, 255, 0))
@@ -274,7 +274,7 @@ class ServiceMenuMode(tools.ModeBase):
             background.blit(text, textpos)
             prevpos = textpos
 
-            
+
 
             #Loop through and display all config menu items
 
@@ -285,7 +285,7 @@ class ServiceMenuMode(tools.ModeBase):
             str_part2 = str_part2[str_part2.find('\n')+1:]
             str_part3 = str_part2[str_part2.find('\n')+1:]
             str_part2 = str_part2[:str_part2.find('\n')]
-            
+
             #print ("string 1: " + str_part1)
             #print ("string 2: " +str_part2)
             #print ("string 3: " +str_part3)
@@ -312,7 +312,7 @@ class ServiceMenuMode(tools.ModeBase):
             textpos.left  = 50
             background.blit(text, textpos)
             prevpos = textpos
-            
+
 
 
 
@@ -322,18 +322,18 @@ class ServiceMenuMode(tools.ModeBase):
                 text = font.render("That switch has been used!  Try again.", 1, (255, 0, 0))
             else:
                 text = font.render("", 1, (255, 0, 0))
-                
+
             textpos = text.get_rect()
             textpos.top = (prevpos.bottom+5)
             textpos.left  = 50
             background.blit(text, textpos)
             prevpos = textpos
-            
 
-            
 
-        
 
-        
+
+
+
+
         screen.blit(background, (0, 0))
         pygame.display.flip()
