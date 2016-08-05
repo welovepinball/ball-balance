@@ -233,6 +233,10 @@ class GameMode(tools.ModeBase):
                 if event.key == c.HOLES_SWITCHES[self.current_hole]:
                     self.state = 'hole success'
                     self.state_just_changed = True
+                elif event.key == c.HOLE_FAILURE_SWITCH:
+                    if self.state == 'game in progress':
+                        self.state = 'end level'
+                        self.state_just_changed = True
 
 
             # If button is being released...
@@ -240,9 +244,6 @@ class GameMode(tools.ModeBase):
                 if event.key == c.HOLE_FAILURE_SWITCH:
                     if self.state == 'starting round':
                         self.state = 'ball on rod'
-                        self.state_just_changed = True
-                    elif self.state == 'game in progress':
-                        self.state = 'end level'
                         self.state_just_changed = True
 
 
