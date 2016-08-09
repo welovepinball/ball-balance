@@ -64,6 +64,7 @@ class Rod:
     Formula to drive servos
     ----------------------------------
     * The midpoint (stopping point) for the continuous servo is 7.5
+    * While the stopping point should be the midpoint, the servo must be calibrated properly, so alternatively setting the pulse to 0 will stop movement
     * Full speed one direction is 5 (min)
     * Full speed the other direction is 10 (max)
     * Slower speeds are achievable at values between midpoint and min/max.
@@ -78,7 +79,7 @@ class Rod:
 
                 if self.servos_operational:
                     try:
-                        self.left_servo.start(10)
+                        self.left_servo.start(7.5+c.SERVO_SPEED)
                     except:
                         print('ERROR: Could not move left servo up.')
 
@@ -94,7 +95,7 @@ class Rod:
 
                 if self.servos_operational:
                     try:
-                        self.left_servo.start(5)
+                        self.left_servo.start(7.5-c.SERVO_SPEED)
                     except:
                         print('ERROR: Could not move left servo down.')
 
@@ -104,7 +105,8 @@ class Rod:
         else:
             if self.servos_operational:
                 try:
-                    self.left_servo.start(7.5)
+                    #setting pulse to 0 to kill motor rather than 7.5 to stall it
+                    self.left_servo.start(0)
                 except:
                     print('ERROR: Could not stop left servo.')
 
@@ -118,7 +120,7 @@ class Rod:
 
                 if self.servos_operational:
                     try:
-                        self.left_servo.start(10)
+                        self.left_servo.start(7.5+c.SERVO_SPEED)
                     except:
                         print('ERROR: Could not move right servo up.')
 
@@ -134,7 +136,7 @@ class Rod:
 
                 if self.servos_operational:
                     try:
-                        self.left_servo.start(5)
+                        self.left_servo.start(7.5-c.SERVO_SPEED)
                     except:
                         print('ERROR: Could not move right servo down.')
 
@@ -144,7 +146,8 @@ class Rod:
         else:
             if self.servos_operational:
                 try:
-                    self.left_servo.start(7.5)
+                    #setting pulse to 0 to kill motor rather than 7.5 to stall it
+                    self.left_servo.start(0)
                 except:
                     print('ERROR: Could not stop right servo.')
 
