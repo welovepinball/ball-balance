@@ -13,7 +13,7 @@ global main_menu_items
 main_menu_items = []
 
 main_menu_items.append("Control Configuration")
-main_menu_items.append("Menu Item 2")
+main_menu_items.append("Motor Configuration")
 main_menu_items.append("Menu Item 3")
 
 
@@ -52,6 +52,10 @@ global new_key_check
 new_key_check = 0
 global selected_menu
 selected_menu = "main"
+global current_speed
+current_speed = c.SERVO_SPEED
+global speed_message
+speed_message = ""
 
 class ServiceMenuMode(tools.ModeBase):
     """Serves as the service menu for the game. Placeholder for now. """
@@ -69,6 +73,8 @@ class ServiceMenuMode(tools.ModeBase):
         global main_menu_items
         global new_keys
         global new_key_check
+        global current_speed
+        global speed_message
 
 
         for event in events:
@@ -141,6 +147,15 @@ class ServiceMenuMode(tools.ModeBase):
                     if selected_menu=="main":
                         # Exit service menu and start to attract mode when the user presses the Service button
                         self.switch_to_mode(c.ATTRACT_MODE)
+                    elif selected_menu == main_menu_items[1]:
+                        selected_menu = "main"
+                        #save out new servo value
+                        c.SERVO_SPEED = current_speed
+                        servo_config_file = open("servo_config.txt", "w")
+                        servo_config_file.write(str(current_speed))
+                        servo_config_file.close()
+                        
+
                     elif selected_menu != main_menu_items[0]:
                         # Return to service main menu if on another menu besides config
                         selected_menu = "main"
@@ -152,9 +167,26 @@ class ServiceMenuMode(tools.ModeBase):
                     current_menu_item -= 1
                     if current_menu_item < 1:
                         current_menu_item = menu_item_total
+                    if selected_menu == main_menu_items[1]:
+                        if current_speed < 2.5:
+                            current_speed += .5
+                            speed_message=""
+                        else:
+                            current_speed=2.5
+                            speed_message =  "The speed cannot be set to greater than 2.5!"
+                
+                
                 elif event.key == c.LEFT_JOY_DOWN:
                     # Move down in menu
                     current_menu_item += 1
+                    if selected_menu == main_menu_items[1]:
+                        if current_speed>0.5:
+                            current_speed -= .5
+                            speed_message=""
+                        else:
+                            current_speed=0.5
+                            speed_message =  "The speed cannot be set to less than 0.5!"
+                        
                     if current_menu_item > menu_item_total:
                         current_menu_item = 1
                 elif event.key == c.START_BUTTON:
@@ -173,6 +205,8 @@ class ServiceMenuMode(tools.ModeBase):
                             #######################################
 
                             config_menu_current_switch = 0
+                        
+                            
 
 
                     #elif selected_menu == main_menu_items[0]:
@@ -184,6 +218,8 @@ class ServiceMenuMode(tools.ModeBase):
 
 
     def render(self, screen):
+        global current_speed
+        global speed_message
         """Render output. """
 
         # Fill background with blue
@@ -334,8 +370,56 @@ class ServiceMenuMode(tools.ModeBase):
             textpos.left  = 50
             background.blit(text, textpos)
             prevpos = textpos
+            
+        elif selected_menu== main_menu_items[1]:
+            # Display menu name at top center
+            font = pygame.font.Font(None, 36)
+            text = font.render("Motor Configuration", 1, (255, 255, 255))
+            textpos = text.get_rect()
+            textpos.centerx = background.get_rect().centerx
+            background.blit(text, textpos)
+            prevpos = textpos
+
+            font = pygame.font.Font(None, 19)
+            text = font.render("", 1, (255, 255, 0))
+            textpos = text.get_rect()
+            textpos.top = (prevpos.bottom+20)
+            textpos.left  = 50
+            background.blit(text, textpos)
+            prevpos = textpos
 
 
+
+            # Display instructional text under previous entry - edit font size and color in the next 2 lines
+            font = pygame.font.Font(None, 25)
+            text = font.render("Set the motor speed using the up/down on the left joystick.", 1, (255, 255, 0))
+            textpos = text.get_rect()
+            textpos.top = (prevpos.bottom+3)
+            textpos.left  = 50
+            background.blit(text, textpos)
+            prevpos = textpos
+
+            text = font.render("0.5 is minimum speed and 2.5 is maximum speed.", 1, (255, 255, 0))
+            textpos = text.get_rect()
+            textpos.top = (prevpos.bottom+5)
+            textpos.left  = 50
+            background.blit(text, textpos)
+            prevpos = textpos
+
+            
+            text = font.render("Current speed: " + str(current_speed), 1, (0, 255, 0))
+            textpos = text.get_rect()
+            textpos.top = (prevpos.bottom+5)
+            textpos.left  = 50
+            background.blit(text, textpos)
+            prevpos = textpos
+
+            text = font.render(speed_message, 1, (255, 0, 0))
+            textpos = text.get_rect()
+            textpos.top = (prevpos.bottom+5)
+            textpos.left  = 50
+            background.blit(text, textpos)
+            prevpos = textpos
 
 
 
