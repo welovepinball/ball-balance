@@ -23,9 +23,21 @@ SCREEN_HEIGHT = 480
 RPI_PIN_LEFT_SERVO  = 12
 RPI_PIN_RIGHT_SERVO = 40
 
-# Set speed of servo between 0 (no motion) and 2.5 (max speed).
-SERVO_SPEED = 2.5
+# Opens servo config file, reads in value and applies to speed variable
+servo_config_path = sys.path[0] + "/servo_config.txt"
+canonicalized_path = servo_config_path.replace('/', os.sep).replace('\\', os.sep)
 
+servo_config_file = open(canonicalized_path, "r")
+
+SERVO_SPEED = float(servo_config_file.readline())
+
+#check speed
+if SERVO_SPEED<.5:
+    SERVO_SPEED=.5
+elif SERVO_SPEED>2.5:
+    SERVO_SPEED=2.5
+
+servo_config_file.close()
 
 
 #---------------------------------------------------------------------
