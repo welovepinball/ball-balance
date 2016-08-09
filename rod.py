@@ -21,13 +21,13 @@ class Rod:
 
     # If servo code were reimplemented completely,
     # this should be set to True
-    servos_operational = False
+    servos_operational = True
 
     left_bar_position  = 260
     right_bar_position = 260
 
 
-    def init(self):
+    def __init__(self):
         # Sets up GPIO pins and motors - DO NOT MODIFY
         try:
             GPIO.setmode(GPIO.BOARD)
@@ -74,7 +74,7 @@ class Rod:
             if self.limit_left_up:
                 print('LEFT UP PREVENTED!')
             else:
-                #print('Moving left up!')
+                print('Moving left up!')
                 if add_sound: tools.play_sound(c.AUDIO_ROD_LEFT_UP)
 
                 if self.servos_operational:
@@ -90,7 +90,7 @@ class Rod:
             if self.limit_left_down:
                 print('LEFT DOWN PREVENTED!')
             else:
-                #print('Moving left down!')
+                print('Moving left down!')
                 if add_sound: tools.play_sound(c.AUDIO_ROD_LEFT_DOWN)
 
                 if self.servos_operational:
@@ -115,7 +115,7 @@ class Rod:
             if self.limit_right_up:
                 print('RIGHT UP PREVENTED!')
             else:
-                #print('Moving right up!')
+                print('Moving right up!')
                 if add_sound: tools.play_sound(c.AUDIO_ROD_RIGHT_UP)
 
                 if self.servos_operational:
@@ -131,7 +131,7 @@ class Rod:
             if self.limit_right_down:
                 print('RIGHT DOWN PREVENTED!')
             else:
-                #print('Moving right down!')
+                print('Moving right down!')
                 if add_sound: tools.play_sound(c.AUDIO_ROD_RIGHT_DOWN)
 
                 if self.servos_operational:
