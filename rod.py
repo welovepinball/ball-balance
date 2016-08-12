@@ -124,7 +124,7 @@ class Rod:
 
                 if self.servos_operational:
                     try:
-                        self.right_servo.start(7.5+c.SERVO_SPEED)
+                        self.right_servo.start(7.5-c.SERVO_SPEED)
                     except:
                         print('ERROR: Could not move right servo up.')
 
@@ -140,7 +140,7 @@ class Rod:
 
                 if self.servos_operational:
                     try:
-                        self.right_servo.start(7.5-c.SERVO_SPEED)
+                        self.right_servo.start(7.5+c.SERVO_SPEED)
                     except:
                         print('ERROR: Could not move right servo down.')
 
