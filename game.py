@@ -6,7 +6,7 @@ import rod as r
 
 import config as c
 
-from modes import AttractMode, GameMode, ServiceMenuMode
+from modes import AttractMode, GameMode, ServiceMenuMode, RodTestMode
 
 
 
@@ -41,7 +41,8 @@ def main():
     # Add new game modes here
     c.ATTRACT_MODE = AttractMode.AttractMode(rod)
     c.GAME_MODE = GameMode.GameMode(rod)
-    c.SERVICE_MENU_MODE = ServiceMenuMode.ServiceMenuMode(rod);
+    c.SERVICE_MENU_MODE = ServiceMenuMode.ServiceMenuMode(rod)
+    c.ROD_TEST_MODE = RodTestMode.RodTestMode(rod)
 
 
     active_mode = c.ATTRACT_MODE
