@@ -67,8 +67,8 @@ class Rod:
     """
     Formula to drive servos
     ----------------------------------
-    * The midpoint (stopping point) for the continuous servo is 7.5
-    * While the stopping point should be the midpoint, the servo must be calibrated properly, so alternatively setting the pulse to 0 will stop movement
+    * The midpoint (stalling point) for the continuous servo is 7.5
+    * While the stalling point should be the midpoint, the servo must be calibrated properly, so alternatively setting the pulse to 0 will stop movement
     * Full speed one direction is 5 (min)
     * Full speed the other direction is 10 (max)
     * Slower speeds are achievable at values between midpoint and min/max.
