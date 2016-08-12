@@ -14,7 +14,7 @@ main_menu_items = []
 
 main_menu_items.append("Control Configuration")
 main_menu_items.append("Motor Configuration")
-main_menu_items.append("Menu Item 3")
+main_menu_items.append("Rod Movement Test")
 
 
 global config_menu_total_items
@@ -154,7 +154,6 @@ class ServiceMenuMode(tools.ModeBase):
                         servo_config_file = open("servo_config.txt", "w")
                         servo_config_file.write(str(current_speed))
                         servo_config_file.close()
-                        
 
                     elif selected_menu != main_menu_items[0]:
                         # Return to service main menu if on another menu besides config
@@ -205,6 +204,12 @@ class ServiceMenuMode(tools.ModeBase):
                             #######################################
 
                             config_menu_current_switch = 0
+                        elif selected_menu == main_menu_items[2]:
+                            #Change to Rod Test Mode
+                            selected_menu = "main"
+                            self.switch_to_mode(c.ROD_TEST_MODE)
+                            
+                    
                         
                             
 
