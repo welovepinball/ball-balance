@@ -42,6 +42,10 @@ class Rod:
 
 
     def activate_joysticks(self, pressed_keys):
+        #setting this to stop motors when not pressed - remove when code accomodates stoping motors
+        self.player_move(0,0)
+        
+        
         if pressed_keys[c.LEFT_JOY_UP] and pressed_keys[c.RIGHT_JOY_UP]:
             self.player_move(1, 1)
         elif pressed_keys[c.LEFT_JOY_UP] and pressed_keys[c.RIGHT_JOY_DOWN]:
@@ -147,7 +151,7 @@ class Rod:
             if self.servos_operational:
                 try:
                     #setting pulse to 0 to kill motor rather than 7.5 to stall it
-                    self.left_servo.start(0)
+                    self.right_servo.start(0)
                 except:
                     print('ERROR: Could not stop right servo.')
 
