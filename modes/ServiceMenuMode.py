@@ -168,7 +168,7 @@ class ServiceMenuMode(tools.ModeBase):
                         current_menu_item = menu_item_total
                     if selected_menu == main_menu_items[1]:
                         if current_speed < 2.5:
-                            current_speed += .5
+                            current_speed += .25
                             speed_message=""
                         else:
                             current_speed=2.5
@@ -180,7 +180,7 @@ class ServiceMenuMode(tools.ModeBase):
                     current_menu_item += 1
                     if selected_menu == main_menu_items[1]:
                         if current_speed>0.5:
-                            current_speed -= .5
+                            current_speed -= .25
                             speed_message=""
                         else:
                             current_speed=0.5
