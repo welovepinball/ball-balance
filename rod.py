@@ -31,13 +31,17 @@ class Rod:
         self.config = config
 
         # Sets up GPIO pins and motors - DO NOT MODIFY
+        c.LeftServoStatus = "Setup Failed!"
+        c.RightServoStatus = "Setup Failed!"
         try:
             GPIO.setmode(GPIO.BOARD)
             GPIO.setup(c.RPI_PIN_LEFT_SERVO, GPIO.OUT)
             GPIO.setup(c.RPI_PIN_RIGHT_SERVO, GPIO.OUT)
 
             self.left_servo  = GPIO.PWM(int(self.config['Servos']['RPiPinLeftServo']), 50)
+            c.LeftServoStatus = "Setup Successful"
             self.right_servo = GPIO.PWM(int(self.config['Servos']['RPiPinRightServo']), 50)
+            c.RightServoStatus = "Setup Successful"
         except:
             print ("Could not set up servos.")
             servos_operational = False
