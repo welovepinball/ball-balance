@@ -27,40 +27,38 @@ class Rod:
     right_bar_position = 260
 
 
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
+
         # Sets up GPIO pins and motors - DO NOT MODIFY
         try:
             GPIO.setmode(GPIO.BOARD)
             GPIO.setup(c.RPI_PIN_LEFT_SERVO, GPIO.OUT)
             GPIO.setup(c.RPI_PIN_RIGHT_SERVO, GPIO.OUT)
 
-            self.left_servo  = GPIO.PWM(c.RPI_PIN_LEFT_SERVO, 50)
-            self.right_servo = GPIO.PWM(c.RPI_PIN_RIGHT_SERVO, 50)
+            self.left_servo  = GPIO.PWM(int(self.config['Servos']['RPiPinLeftServo']), 50)
+            self.right_servo = GPIO.PWM(int(self.config['Servos']['RPiPinRightServo']), 50)
         except:
             print ("Could not set up servos.")
             servos_operational = False
 
 
     def activate_joysticks(self, pressed_keys):
-        #setting this to stop motors when not pressed - remove when code accomodates stoping motors
-        self.player_move(0,0)
-        
-        
-        if pressed_keys[c.LEFT_JOY_UP] and pressed_keys[c.RIGHT_JOY_UP]:
+        if pressed_keys[self.config['Controls']['JoyLeftUp']] and pressed_keys[self.config['Controls']['JoyRightUp']]:
             self.player_move(1, 1)
-        elif pressed_keys[c.LEFT_JOY_UP] and pressed_keys[c.RIGHT_JOY_DOWN]:
+        elif pressed_keys[self.config['Controls']['JoyLeftUp']] and pressed_keys[self.config['Controls']['JoyRightDown']]:
             self.player_move(1, -1)
-        elif pressed_keys[c.LEFT_JOY_DOWN] and pressed_keys[c.RIGHT_JOY_UP]:
+        elif pressed_keys[self.config['Controls']['JoyLeftDown']] and pressed_keys[self.config['Controls']['JoyRightUp']]:
             self.player_move(-1, 1)
-        elif pressed_keys[c.LEFT_JOY_DOWN] and pressed_keys[c.RIGHT_JOY_DOWN]:
+        elif pressed_keys[self.config['Controls']['JoyLeftDown']] and pressed_keys[self.config['Controls']['JoyRightDown']]:
             self.player_move(-1, -1)
-        elif pressed_keys[c.LEFT_JOY_UP]:
+        elif pressed_keys[self.config['Controls']['JoyLeftUp']]:
             self.player_move(1, 0)
-        elif pressed_keys[c.LEFT_JOY_DOWN]:
+        elif pressed_keys[self.config['Controls']['JoyLeftDown']]:
             self.player_move(-1, 0)
-        elif pressed_keys[c.RIGHT_JOY_UP]:
+        elif pressed_keys[self.config['Controls']['JoyRightUp']]:
             self.player_move(0, 1)
-        elif pressed_keys[c.RIGHT_JOY_DOWN]:
+        elif pressed_keys[self.config['Controls']['JoyRightDown']]:
             self.player_move(0, -1)
 
 
@@ -79,11 +77,11 @@ class Rod:
                 print('LEFT UP PREVENTED!')
             else:
                 print('Moving left up!')
-                if add_sound: tools.play_sound(c.AUDIO_ROD_LEFT_UP)
+                if add_sound: tools.play_sound(self.config['Audio']['RodLeftUp'])
 
                 if self.servos_operational:
                     try:
-                        self.left_servo.start(7.5+c.SERVO_SPEED)
+                        self.left_servo.start(7.5 + self.config['Servos']['SpeedLeftUp'])
                     except:
                         print('ERROR: Could not move left servo up.')
 
@@ -95,11 +93,11 @@ class Rod:
                 print('LEFT DOWN PREVENTED!')
             else:
                 print('Moving left down!')
-                if add_sound: tools.play_sound(c.AUDIO_ROD_LEFT_DOWN)
+                if add_sound: tools.play_sound(self.config['Audio']['RodLeftDown'])
 
                 if self.servos_operational:
                     try:
-                        self.left_servo.start(7.5-c.SERVO_SPEED)
+                        self.left_servo.start(7.5 - self.config['Servos']['SpeedLeftDown'])
                     except:
                         print('ERROR: Could not move left servo down.')
 
@@ -120,11 +118,11 @@ class Rod:
                 print('RIGHT UP PREVENTED!')
             else:
                 print('Moving right up!')
-                if add_sound: tools.play_sound(c.AUDIO_ROD_RIGHT_UP)
+                if add_sound: tools.play_sound(self.config['Audio']['RodRightUp'])
 
                 if self.servos_operational:
                     try:
-                        self.right_servo.start(7.5-c.SERVO_SPEED)
+                        self.right_servo.start(7.5 - self.config['Servos']['SpeedRightUp'])
                     except:
                         print('ERROR: Could not move right servo up.')
 
@@ -136,11 +134,11 @@ class Rod:
                 print('RIGHT DOWN PREVENTED!')
             else:
                 print('Moving right down!')
-                if add_sound: tools.play_sound(c.AUDIO_ROD_RIGHT_DOWN)
+                if add_sound: tools.play_sound(self.config['Audio']['RodRightDown'])
 
                 if self.servos_operational:
                     try:
-                        self.right_servo.start(7.5+c.SERVO_SPEED)
+                        self.right_servo.start(7.5 + self.config['Servos']['SpeedRightDown'])
                     except:
                         print('ERROR: Could not move right servo down.')
 
@@ -175,8 +173,8 @@ class Rod:
         if self.limit_right_up or self.limit_right_down or not self.allowed_to_move: right_block_color = (255, 100, 0)
 
         # Draw the carriages to the screen
-        pygame.draw.rect(screen, left_block_color,  pygame.Rect(30,  self.left_bar_position,  60, 60))
-        pygame.draw.rect(screen, right_block_color, pygame.Rect(300, self.right_bar_position, 60, 60))
+        pygame.draw.rect(screen, left_block_color,  pygame.Rect(90,  self.left_bar_position,  60, 60))
+        pygame.draw.rect(screen, right_block_color, pygame.Rect(490, self.right_bar_position, 60, 60))
 
         # Add a line for the bar between the carriage blocks
-        pygame.draw.line(screen, (200, 200, 200), (90, self.left_bar_position + 30), (300, self.right_bar_position + 30), 10)
+        pygame.draw.line(screen, (200, 200, 200), (150, self.left_bar_position + 30), (490, self.right_bar_position + 30), 10)

@@ -1,3 +1,7 @@
+import time
+
+import math
+
 import pygame
 
 import tools
@@ -20,10 +24,12 @@ INCREMENT_ROD_TIMER = pygame.USEREVENT + 3
 
 class GameMode(tools.ModeBase):
 
-    def __init__(self, rod):
+    def __init__(self, assets):
+        super(GameMode, self).__init__(assets)
 
-        self.rod = rod
         self.reset_settings()
+
+        self.start_time = time.time()
 
 
 
@@ -45,6 +51,8 @@ class GameMode(tools.ModeBase):
 
         self.skip_music = False
 
+        self.start_time = time.time()
+
 
 
     def process(self, events, pressed_keys):
@@ -65,7 +73,7 @@ class GameMode(tools.ModeBase):
             self.current_bonus = self.current_hole * 100
 
             if not self.skip_music:
-                tools.play_song(c.AUDIO_THEME)
+                tools.play_song(self.settings['Audio']['Theme'])
 
             self.rod.allowed_to_move = False
 
@@ -129,8 +137,7 @@ class GameMode(tools.ModeBase):
 
             print('Player was successful')
 
-            pygame.mixer.music.load(c.AUDIO_SUCCESS)
-            pygame.mixer.music.play(0)
+            tools.play_song(self.settings['Audio']['Success'])
 
             pygame.time.delay(2000)
 
@@ -148,7 +155,7 @@ class GameMode(tools.ModeBase):
             if self.current_bonus > 0:
                 self.current_bonus -= 10
                 self.score        += 10
-                tools.play_sound(c.AUDIO_BONUS)
+                tools.play_sound(self.settings['Audio']['Bonus'])
                 pygame.time.delay(150)
             else:
                 pygame.time.delay(500)
@@ -161,8 +168,7 @@ class GameMode(tools.ModeBase):
 
                 print('Extra ball earned')
 
-                pygame.mixer.music.load(c.AUDIO_EXTRA_BALL)
-                pygame.mixer.music.play(0)
+                tools.play_song(self.settings['Audio']['ExtraBall'])
 
                 self.balls_left += 1
                 self.skip_music = True
@@ -172,8 +178,7 @@ class GameMode(tools.ModeBase):
 
             print('Player failed')
 
-            pygame.mixer.music.load(c.AUDIO_FAILURE)
-            pygame.mixer.music.play(0)
+            tools.play_song(self.settings['Audio']['Failure'])
 
             pygame.time.delay(2500)
 
@@ -194,8 +199,7 @@ class GameMode(tools.ModeBase):
             pygame.time.set_timer(INCREMENT_ROD_TIMER, 0)
 
             pygame.mixer.music.stop()
-            pygame.mixer.music.load(c.AUDIO_GAMEOVER)
-            pygame.mixer.music.play(0)
+            tools.play_song(self.settings['Audio']['GameOver'])
 
             pygame.time.delay(10500)
 
@@ -215,12 +219,15 @@ class GameMode(tools.ModeBase):
             pygame.time.set_timer(INCREMENT_ROD_TIMER, 0)
 
             pygame.mixer.music.stop()
-            pygame.mixer.music.load(c.AUDIO_WIN)
-            pygame.mixer.music.play(0)
+            tools.play_song(self.settings['Audio']['Win'])
 
             self.star_lit = True
 
             pygame.time.delay(9500)
+
+            self.reset_settings()
+
+            self.switch_to_mode(c.ATTRACT_MODE)
 
 
         # ------------------------------------------------------------
@@ -230,10 +237,10 @@ class GameMode(tools.ModeBase):
 
             # If a button is pressed down...
             if event.type == pygame.KEYDOWN:
-                if event.key == c.HOLES_SWITCHES[self.current_hole]:
+                if event.key == self.settings['Controls']['HoleSwitch'+str(self.current_hole)]:
                     self.state = 'hole success'
                     self.state_just_changed = True
-                elif event.key == c.HOLE_FAILURE_SWITCH:
+                elif event.key == self.settings['Controls']['HoleSwitchFailure']:
                     if self.state == 'game in progress':
                         self.state = 'end level'
                         self.state_just_changed = True
@@ -241,7 +248,7 @@ class GameMode(tools.ModeBase):
 
             # If button is being released...
             elif event.type == pygame.KEYUP:
-                if event.key == c.HOLE_FAILURE_SWITCH:
+                if event.key == self.settings['Controls']['HoleSwitchFailure']:
                     if self.state == 'starting round':
                         self.state = 'ball on rod'
                         self.state_just_changed = True
@@ -250,7 +257,7 @@ class GameMode(tools.ModeBase):
             elif event.type == BONUS_REDUCE_TIMER:
                 if self.state == 'game in progress':
                     pygame.time.set_timer(BONUS_REDUCE_TIMER, 4000)
-                    tools.play_sound(c.AUDIO_TICK)
+                    tools.play_sound(self.settings['Audio']['Tick'])
 
                     if self.current_bonus > 0:
                         self.current_bonus -= 10
@@ -277,8 +284,43 @@ class GameMode(tools.ModeBase):
 
     def render(self, screen):
 
-        # Fill the screen with black to redraw the graphics
+        # Fill the screen with black
         screen.fill((0, 0, 0))
+
+
+        pixels = []
+
+        show_hole_led = False
+
+        valid_states = ['starting round', 'ball on rod', 'ball at origin', 'game in progress']
+
+        self.is_valid_state = False
+        for valid_state in valid_states:
+            if self.state == valid_state:
+                self.is_valid_state = True
+
+
+        if self.is_valid_state:
+            t = (time.time() - self.start_time) * 22
+
+            for ii in range(self.leds.number_of_leds - 1):
+
+                if ii == self.settings['LEDs']['Hole' + str(self.current_hole)]:
+                    c = math.sin(t) * 127 + 128
+                else:
+                    c = 64
+
+                pixels.append((c, c, c))
+                self.leds.generate_led_graphic(screen, ii, (c, c, c))
+
+        else:
+            for ii in range(self.leds.number_of_leds):
+                pixels.append((0, 64, 0))
+                self.leds.generate_led_graphic(screen, ii, (64, 64, 64))
+
+        # Send the new pixels to the actual LEDs
+        self.leds.put_pixels(pixels)
+
 
         font = pygame.font.Font(None, 36)
 

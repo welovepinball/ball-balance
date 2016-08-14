@@ -13,12 +13,16 @@ import config as c
 class ModeBase:
     """Modes will inherit from this class. """
 
-    def __init__(self, rod):
-        self.rod = rod
-        self.refresh(rod)
+    def __init__(self, assets):
+        self.rod = assets['rod']
+        self.leds = assets['leds']
+        self.settings = assets['settings']
+        self.screen = assets['screen']
+
+        self.refresh(assets)
 
 
-    def refresh(self, rod):
+    def refresh(self, assets):
         """Set the mode's next property to self.
 
         If the program has already been in this mode before and switched to a
@@ -54,10 +58,31 @@ class ModeBase:
         self.next = next_mode
 
 
+    def add_text(self, caption = "", size = 36, align = 'left', color = (255, 255, 0), x = 'center', y = 240):
+        """ Helper function to add text without all the boilerplate """
 
-#---------------------------------------------------------------------
+        font = pygame.font.Font(None, size)
+        text = font.render(caption, 1, color)
+
+        position = text.get_rect()
+        if x == 'center':
+            position.centerx = self.settings['Screen']['X'] / 2
+        else:
+            if align == 'right':
+                position.right = x
+            else:
+                position.left = x
+
+        position.centery = y
+        self.screen.blit(text, position)
+
+
+
+
+
+#-----------------------------------------------------------------
 # Sound and music handling (won't crash PyGame if file not found!)
-#---------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 sounds = {}
 
