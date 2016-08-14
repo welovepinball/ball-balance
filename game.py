@@ -6,6 +6,9 @@ import opc
 
 import tools
 
+import sys
+import os
+
 import rod as r
 import leds as l
 
@@ -30,9 +33,13 @@ def main():
     pygame.init()
 
     # Load config file
+    settings_path = sys.path[0] + "/settings.ini"
+    canonicalized_path = settings_path.replace('/', os.sep).replace('\\', os.sep)
+
     config = configparser.ConfigParser()
     config.optionxform = str
-    config.read('settings.ini')
+    #config.read('settings.ini')
+    config.read(canonicalized_path)
 
     settings = {
         'Controls': {},
@@ -41,6 +48,7 @@ def main():
         'Audio': {},
         'LEDs': {}
     }
+    
 
     for option in config['Controls']:
         settings['Controls'][option] = int(config['Controls'][option])
