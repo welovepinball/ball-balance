@@ -44,6 +44,10 @@ class Rod:
 
 
     def activate_joysticks(self, pressed_keys):
+
+        # Setting this to stop motors when not pressed - remove when code accomodates stoping motors
+        self.player_move(0,0)
+
         if pressed_keys[self.config['Controls']['JoyLeftUp']] and pressed_keys[self.config['Controls']['JoyRightUp']]:
             self.player_move(1, 1)
         elif pressed_keys[self.config['Controls']['JoyLeftUp']] and pressed_keys[self.config['Controls']['JoyRightDown']]:
