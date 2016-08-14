@@ -66,6 +66,20 @@ class ServoAdjustmentsMode(tools.ModeBase):
         self.add_text(caption='Double-tap the Start button to switch', y=90)
         self.add_text(caption='between adjustment and movement modes', y=120)
 
+        if c.LeftServoStatus == "Setup Failed!":
+            fontcolor = (255,0,0)
+        else:
+            fontcolor = (0,255,0)
+
+        self.add_text(caption="Left Motor Status: " + c.LeftServoStatus, y=160, size=20, color=fontcolor)
+        
+        if c.RightServoStatus == "Setup Failed!":
+            fontcolor = (255,0,0)
+        else:
+            fontcolor = (0,255,0)
+            
+        self.add_text(caption="Right Motor Status: " + c.RightServoStatus, y=175, size = 20, color=fontcolor)
+
         if self.movement_mode:
             # Generate the carriage and rod graphics
             self.rod.generate_graphics(screen)
