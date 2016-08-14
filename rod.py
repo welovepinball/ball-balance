@@ -35,8 +35,8 @@ class Rod:
         c.RightServoStatus = "Setup Failed!"
         try:
             GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(c.RPI_PIN_LEFT_SERVO, GPIO.OUT)
-            GPIO.setup(c.RPI_PIN_RIGHT_SERVO, GPIO.OUT)
+            GPIO.setup(int(self.config['Servos']['RPiPinLeftServo']), GPIO.OUT)
+            GPIO.setup(int(self.config['Servos']['RPiPinRightServo']), GPIO.OUT)
 
             self.left_servo  = GPIO.PWM(int(self.config['Servos']['RPiPinLeftServo']), 50)
             c.LeftServoStatus = "Setup Successful"
