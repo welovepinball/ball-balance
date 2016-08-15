@@ -1,14 +1,15 @@
-try:
-    import RPi.GPIO as GPIO
-except:
-    print ("Could not import RPi.GPIO")
-
 import pygame
 
 import tools
 
 import config as c
 
+try:
+    import RPi.GPIO as GPIO
+    tools.Debug_Print("GPIO setup was successful.")
+except:
+    print ("Could not import RPi.GPIO")
+    tools.Debug_Print("Could not import RPi.GPIO.")
 
 class Rod:
 
@@ -42,8 +43,10 @@ class Rod:
             c.LeftServoStatus = "Setup Successful"
             self.right_servo = GPIO.PWM(int(self.config['Servos']['RPiPinRightServo']), 50)
             c.RightServoStatus = "Setup Successful"
+            tools.Debug_Print("Servo setup was successful.")
         except:
             print ("Could not set up servos.")
+            tools.Debug_Print("Could not set up servos.")
             servos_operational = False
 
 
