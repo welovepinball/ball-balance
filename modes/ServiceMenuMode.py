@@ -14,9 +14,7 @@ import config as c
 from .ServiceMenuModeSwitches import ConfigureSwitchesMode
 from .ServiceMenuModeServos import ServoAdjustmentsMode
 from .ServiceMenuModeLEDs import LEDAddressesMode
-
-
-
+from .ServiceMenuModeDebugConsole import DebugConsoleMode
 
 
 configured = False
@@ -38,6 +36,7 @@ class ServiceMenuMode(tools.ModeBase):
                 {'item': 'Switch Configuration', 'class': ConfigureSwitchesMode(assets)},
                 {'item': 'Servo Adjustments', 'class': ServoAdjustmentsMode(assets)},
                 {'item': 'LED Addresses', 'class': LEDAddressesMode(assets)},
+                {'item': 'Debug Console', 'class': DebugConsoleMode(assets)},
             ]
 
         self.selected_menu_item = 0
