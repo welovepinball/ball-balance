@@ -9,7 +9,6 @@ import config as c
 #---------------------------------------------------------------------
 
 
-
 class ModeBase:
     """Modes will inherit from this class. """
 
@@ -110,3 +109,21 @@ def play_song(path, loop = 0):
     if os.path.isfile(canonicalized_path):
         pygame.mixer.music.load(canonicalized_path)
         pygame.mixer.music.play(loop)
+
+#-----------------------------------------------------------------
+# Debug Print Buffer
+#-----------------------------------------------------------------
+
+DEBUG_PRINT_BUFFER=[]
+
+def Debug_Print(line):
+    #if less than 10 items in buffer, then add new line to end
+    if len(DEBUG_PRINT_BUFFER)<10:
+        DEBUG_PRINT_BUFFER.append(line)
+    #if 10 items in buffer, shift items up and add new line to end
+    else:
+        i=0
+        while i < 8:
+            DEBUG_PRINT_BUFFER[i]=DEBUG_PRINT_BUFFER[i+1]
+            i+=1
+        DEBUG_PRINT_BUFFER[i]=line
