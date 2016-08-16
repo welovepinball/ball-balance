@@ -1,4 +1,6 @@
-These are directions for setting up the RPi from scratch.
+# Setting up the RPi from scratch
+
+## Configure OS and Wi-Fi
 
 1. Start with the lite version here, save it to an SD card, and insert into RPi:
 https://www.raspberrypi.org/downloads/raspbian/
@@ -39,37 +41,39 @@ https://www.raspberrypi.org/downloads/raspbian/
    ping -c 4 google.com
    ```
 
+## Install Git, Python, PyGame, and ball-balance
+
 At this point you can SSH into the RPi from another computer using an application like PuTTy.  You just need to know the IP address of the RPi.  Using an SSH client will allow you to copy/paste commands remotely.
 
-10. Install Python3, agreeing to any prompts:
+1. Install Python3, agreeing to any prompts:
    ```sh
    sudo apt-get install python3
    ```
 
-11. Install Pygame, agreeing to any prompts:
+2. Install Pygame, agreeing to any prompts:
    ```sh
    sudo apt-get install python3-pygame
    ```
 
-12. Install Git, agreeing to any prompts:
+3. Install Git, agreeing to any prompts:
    ```sh
    sudo apt-get install git
    ```
 
-13. Install FadeCandy server using directions on this page:
-https://learn.adafruit.com/1500-neopixel-led-curtain-with-raspberry-pi-fadecandy/fadecandy-server-setup
+4. Install FadeCandy server using directions on this page:
+   https://learn.adafruit.com/1500-neopixel-led-curtain-with-raspberry-pi-fadecandy/fadecandy-server-setup
 
-14. Download the latest repository for our ICB type game, and it ends up in a directory named "ball-balance":
+5. Download the latest repository for our ICB type game, and it ends up in a directory named "ball-balance":
    ```sh
    git clone https://github.com/welovepinball/ball-balance.git
    ```
 
-15. Navigate to ball-balance directory:
+6. Navigate to ball-balance directory:
    ```sh
    cd ball-balance
    ```
 
-16. Run game (Escape to exit):
+7. Run game (Escape to exit):
    ```sh
    python3 game.py 
    ```
