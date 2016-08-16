@@ -22,7 +22,7 @@ https://www.raspberrypi.org/downloads/raspbian/
        psk="YOUR_PASSWORD"
    }
    ```
-6. CTRL+X to exit. Y save changes and exit.
+6. <kbd>Ctrl</kbd>+<kbd>X</kbd> to exit. Y save changes and exit.
 
 7. Reboot:
    ```sh
@@ -73,7 +73,7 @@ At this point you can SSH into the RPi from another computer using an applicatio
    cd ball-balance
    ```
 
-7. Run game (Escape to exit):
+7. Run game (<kbd>Esc</kbd> to exit):
    ```sh
    python3 game.py 
    ```
