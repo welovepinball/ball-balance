@@ -62,3 +62,11 @@ class AttractMode(tools.ModeBase):
             self.leds.generate_led_graphic(screen, ii, (r, g, b))
 
         self.leds.put_pixels(pixels)
+
+        #Checks if Debugging is on
+        if tools.DEBUG_TOGGLE:
+            i=90
+            # Prints Debug Buffer
+            for line in tools.DEBUG_PRINT_BUFFER:
+                i+=10
+                self.add_text(caption="-"+line, size=20, color=(255, 255, 255), y=i, x=14)

@@ -83,3 +83,12 @@ class ServoAdjustmentsMode(tools.ModeBase):
         if self.movement_mode:
             # Generate the carriage and rod graphics
             self.rod.generate_graphics(screen)
+            
+        #Checks if Debugging is on
+        if tools.DEBUG_TOGGLE:
+            i=90
+            # Prints Debug Buffer
+            for line in tools.DEBUG_PRINT_BUFFER:
+                i+=10
+                self.add_text(caption="-"+line, size=20, color=(255, 255, 255), y=i, x=14)
+

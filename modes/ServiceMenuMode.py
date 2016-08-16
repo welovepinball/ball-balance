@@ -15,7 +15,7 @@ from .ServiceMenuModeSwitches import ConfigureSwitchesMode
 from .ServiceMenuModeServos import ServoAdjustmentsMode
 from .ServiceMenuModeLEDs import LEDAddressesMode
 from .ServiceMenuModeDebugConsole import DebugConsoleMode
-
+from .ServiceMenuSettings import SettingsMenuMode
 
 configured = False
 
@@ -33,6 +33,7 @@ class ServiceMenuMode(tools.ModeBase):
             configured = True
 
             self.main_menu = [
+                {'item': 'Settings', 'class': SettingsMenuMode(assets)},
                 {'item': 'Switch Configuration', 'class': ConfigureSwitchesMode(assets)},
                 {'item': 'Servo Adjustments', 'class': ServoAdjustmentsMode(assets)},
                 {'item': 'LED Addresses', 'class': LEDAddressesMode(assets)},
