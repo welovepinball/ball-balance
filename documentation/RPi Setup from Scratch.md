@@ -7,22 +7,21 @@ https://www.raspberrypi.org/downloads/raspbian/
 
 2. Turn it on and at first it may need to do something to resize if the SD card is larger than the image. This seemed to turn the RPi off when finished and I had to unplug and plug it back in to boot.
 
-3. Get it booted.
-   Login credentials: pi/raspberry
+3. Get it booted. Login credentials: pi/raspberry
 
 4. Set up Wi-Fi - open wpa_supplicant.conf in the nano editor with the following command:
    ```sh
    sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
    ```
 
-5. Add the following to the bottom of the file, replacing SSID and password with your wifi credentials:
+5. Add the following to the bottom of the file, replacing SSID and password with your Wi-fi credentials:
    ```
    network={
        ssid="YOUR_SSID"
        psk="YOUR_PASSWORD"
    }
    ```
-6. <kbd>Ctrl</kbd>+<kbd>X</kbd> to exit. Y save changes and exit.
+6. <kbd>Ctrl</kbd>+<kbd>X</kbd> to exit. Press <kbd>Y</kbd> to save changes and exit.
 
 7. Reboot:
    ```sh
