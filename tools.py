@@ -123,7 +123,9 @@ def Debug_Print(line):
     #if 10 items in buffer, shift items up and add new line to end
     else:
         i=0
-        while i < 8:
+        while i < 9:
             DEBUG_PRINT_BUFFER[i]=DEBUG_PRINT_BUFFER[i+1]
             i+=1
         DEBUG_PRINT_BUFFER[i]=line
+
+DEBUG_TOGGLE = True

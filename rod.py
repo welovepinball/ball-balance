@@ -86,8 +86,10 @@ class Rod:
         if left > 0:
             if self.limit_left_up:
                 print('LEFT UP PREVENTED!')
+                tools.Debug_Print('LEFT UP PREVENTED!')
             else:
                 print('Moving left up!')
+                tools.Debug_Print('Moving left up!')
                 if add_sound: tools.play_sound(self.config['Audio']['RodLeftUp'])
 
                 if self.servos_operational:
@@ -95,6 +97,7 @@ class Rod:
                         self.left_servo.start(7.5 + self.config['Servos']['SpeedLeftUp'])
                     except:
                         print('ERROR: Could not move left servo up.')
+                        tools.Debug_Print('ERROR: Could not move left servo up.')
 
                 # This is superficial, for testing purposes. Will be removed.
                 self.left_bar_position -= 3
@@ -102,8 +105,10 @@ class Rod:
         elif left < 0:
             if self.limit_left_down:
                 print('LEFT DOWN PREVENTED!')
+                tools.Debug_Print('LEFT DOWN PREVENTED!')
             else:
                 print('Moving left down!')
+                tools.Debug_Print('Moving left down!')
                 if add_sound: tools.play_sound(self.config['Audio']['RodLeftDown'])
 
                 if self.servos_operational:
@@ -111,6 +116,7 @@ class Rod:
                         self.left_servo.start(7.5 - self.config['Servos']['SpeedLeftDown'])
                     except:
                         print('ERROR: Could not move left servo down.')
+                        tools.Debug_Print('ERROR: Could not move left servo down.')
 
                 # This is superficial, for testing purposes. Will be removed.
                 self.left_bar_position += 3
@@ -122,13 +128,16 @@ class Rod:
                     self.left_servo.start(0)
                 except:
                     print('ERROR: Could not stop left servo.')
+                    tools.Debug_Print('ERROR: Could not stop left servo.')
 
 
         if right > 0:
             if self.limit_right_up:
                 print('RIGHT UP PREVENTED!')
+                tools.Debug_Print('RIGHT UP PREVENTED!')
             else:
                 print('Moving right up!')
+                tools.Debug_Print('Moving right up!')
                 if add_sound: tools.play_sound(self.config['Audio']['RodRightUp'])
 
                 if self.servos_operational:
@@ -136,6 +145,7 @@ class Rod:
                         self.right_servo.start(7.5 - self.config['Servos']['SpeedRightUp'])
                     except:
                         print('ERROR: Could not move right servo up.')
+                        tools.Debug_Print('ERROR: Could not move right servo up.')
 
                 # This is superficial, for testing purposes. Will be removed.
                 self.right_bar_position -= 3
@@ -143,8 +153,10 @@ class Rod:
         elif right < 0:
             if self.limit_right_down:
                 print('RIGHT DOWN PREVENTED!')
+                tools.Debug_Print('RIGHT DOWN PREVENTED!')
             else:
                 print('Moving right down!')
+                tools.Debug_Print('Moving right down!')
                 if add_sound: tools.play_sound(self.config['Audio']['RodRightDown'])
 
                 if self.servos_operational:
@@ -152,6 +164,7 @@ class Rod:
                         self.right_servo.start(7.5 + self.config['Servos']['SpeedRightDown'])
                     except:
                         print('ERROR: Could not move right servo down.')
+                        tools.Debug_Print('ERROR: Could not move right servo down.')
 
                 # This is superficial, for testing purposes. Will be removed.
                 self.right_bar_position += 3
@@ -163,6 +176,7 @@ class Rod:
                     self.right_servo.start(0)
                 except:
                     print('ERROR: Could not stop right servo.')
+                    tools.Debug_Print('ERROR: Could not stop right servo.')
 
 
     def player_move(self, left, right):
@@ -170,6 +184,7 @@ class Rod:
             self.move(left, right, True)
         else:
             print('NOT ALLOWED TO MOVE RIGHT NOW!')
+            tools.Debug_Print('NOT ALLOWED TO MOVE RIGHT NOW!')
 
 
     def generate_graphics(self, screen):
