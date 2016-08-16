@@ -341,11 +341,19 @@ class GameMode(tools.ModeBase):
 
         #Checks if Debugging is on
         if tools.DEBUG_TOGGLE:
-            i=90
+
+            #increments debug timer and adds blank to print buffer
+            #this would eventually clear the buffer if no other print commands are sent
+            tools.DEBUG_TIMER+=1
+            if tools.DEBUG_TIMER > tools.DEBUG_TIMER_MAX:
+                tools.DEBUG_TIMER = 0
+                tools.Debug_Print("")
+            debug_y=350
             # Prints Debug Buffer
             for line in tools.DEBUG_PRINT_BUFFER:
-                i+=10
-                self.add_text(caption="-"+line, size=20, color=(255, 255, 255), y=i, x=14)
-
-
+                debug_y+=10
+                debug_caption = ""
+                if line:
+                    debug_caption = "-" + line
+                self.add_text(caption=debug_caption, size=20, color=(255, 255, 255), y=debug_y, x=14)
         
