@@ -129,3 +129,5 @@ def Debug_Print(line):
         DEBUG_PRINT_BUFFER[i]=line
 
 DEBUG_TOGGLE = True
+DEBUG_TIMER = 0
+DEBUG_TIMER_MAX = 10
