@@ -1,0 +1,1 @@
+This file contains measurements for the various components of the original Ice Cold Beer arcade machine.
